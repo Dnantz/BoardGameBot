@@ -28,8 +28,9 @@ class Gomoku(Game):
     message: discord.Message
 
     async def setup(self, ctx: Context, *args):
-        if not args[0]:
+        if not ctx.message.mentions[0]:
             await ctx.channel.send("Not enough players! you need 2 players for this game.")
+            raise IndexError()
 
         self.message = await ctx.channel.send("Setting up game...")
         # TODO: shuffle who goes first
@@ -149,7 +150,10 @@ class Gomoku(Game):
         return False
 
     async def play(self, ctx, bot, *args):
-        await self.setup(ctx, args)
+        try:
+            await self.setup(ctx, args)
+        except IndexError:
+            return
         game_won = False
 
         while not game_won:
