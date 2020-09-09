@@ -18,4 +18,10 @@ async def on_ready():
         print(g.name)
 
 
+@bot.event
+async def on_command_error(ctx, e):
+    if e == commands.CommandNotFound:
+        pass
+    else:
+        print(e)
 bot.run(open("key").read())
