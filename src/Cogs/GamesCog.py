@@ -21,3 +21,15 @@ class GamesCog(commands.Cog):
                 await ctx.channel.send("Game not recognized!")
         else:
             await ctx.channel.send("You need to specify what you want to play!")
+
+    @commands.command()
+    async def botgame(self, ctx: Context, game: str = None):
+        if game:
+            try:
+                game = game.lower().capitalize()
+                game = src.Games.gamelist[game]
+                g = game.create()
+
+                await g.bot_game(ctx)
+            except KeyError:
+                await ctx.channel.send("Game not recognized!")
