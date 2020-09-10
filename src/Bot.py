@@ -23,5 +23,5 @@ async def on_command_error(ctx, e):
     if e == commands.CommandNotFound:
         pass
     else:
-        print(e)
+        raise e
 bot.run(open("key").read())

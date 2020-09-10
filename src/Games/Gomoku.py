@@ -33,11 +33,9 @@ class Gomoku(Game):
             raise IndexError()
 
         self.message = await ctx.channel.send("Setting up game...")
-        # TODO: shuffle who goes first
         p1 = ctx.author.nick if ctx.author.nick else ctx.author.name
-        p2 = ctx.message.mentions[0].nick if ctx.message.mentions[0].nick else ctx.message.mentions[0].name
         self.playerNames = [p1, p2]
-        self.players = [ctx.author, ctx.message.mentions[0]]
+
 
         self.header = "{0}{1} | {2}{3}".format(
             self.WHITE_PIECE, self.playerNames[0], self.playerNames[1], self.BLACK_PIECE
@@ -108,13 +106,10 @@ class Gomoku(Game):
         neighbors = []
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if (i == 0 and j == 0) or coords[0]+i < 1 or coords[1]+j < 1:
+                if (i == 0 and j == 0) or coords[0]+i < 1 or coords[1]+j < 1 or coords[0]+i > 13 or coords[1]+j > 13:
                     continue
-                try:
-                    if self.gameboard[coords[0]+i, coords[1]+j] != self.BLANK_SQUARE:
-                        neighbors.append([coords[0]+i, coords[1]+j])
-                except IndexError:
-                    pass
+                if self.gameboard[coords[0]+i, coords[1]+j] != self.BLANK_SQUARE:
+                    neighbors.append([coords[0]+i, coords[1]+j])
         return neighbors
 
     def get_moves(self):
