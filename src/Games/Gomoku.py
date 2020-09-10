@@ -108,7 +108,7 @@ class Gomoku(Game):
         neighbors = []
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if (i == 0 and j == 0) or coords[0]+i < 2 or coords[1]+j < 2:
+                if (i == 0 and j == 0) or coords[0]+i < 1 or coords[1]+j < 1:
                     continue
                 try:
                     if self.gameboard[coords[0]+i, coords[1]+j] != self.BLANK_SQUARE:
